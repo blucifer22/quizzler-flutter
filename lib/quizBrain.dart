@@ -2,6 +2,7 @@ import 'package:quizzler/question.dart';
 
 class QuizBrain {
   int _questionNumber = 0;
+  int _questionsCorrect = 0;
 
   List<Question> _questionBank = [
     Question('Some cats are actually allergic to humans', true),
@@ -29,6 +30,10 @@ class QuizBrain {
     Question(
         'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         true),
+    Question(
+        'Mike Krzyzewski has been the head coach of Duke Men\'s Basketball since 1980.',
+        true),
+    Question('A right triangle can never be equilateral.', true),
   ];
 
   void nextQuestion() {
@@ -43,5 +48,25 @@ class QuizBrain {
 
   bool getQuestionAnswer() {
     return _questionBank[_questionNumber].questionAnswer;
+  }
+
+  bool isFinished() {
+    if (_questionNumber >= _questionBank.length - 1)
+      return true;
+    else
+      return false;
+  }
+
+  void reset() {
+    _questionNumber = 0;
+    _questionsCorrect = 0;
+  }
+
+  void questionCorrect() {
+    _questionsCorrect++;
+  }
+
+  int getQuestionsCorrect() {
+    return _questionsCorrect;
   }
 }

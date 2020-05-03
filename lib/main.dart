@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quizBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain(); // Create our quiz brain
 
@@ -39,6 +40,7 @@ class _QuizPageState extends State<QuizPage> {
           color: Colors.green,
         ),
       );
+      quizBrain.questionCorrect();
     } else {
       scoreKeeper.add(
         Icon(
@@ -47,7 +49,19 @@ class _QuizPageState extends State<QuizPage> {
         ),
       );
     }
-    quizBrain.nextQuestion();
+    if (quizBrain.isFinished()) {
+      int questionsCorrect = quizBrain.getQuestionsCorrect();
+      Alert(
+              context: context,
+              title: 'Congratulations!',
+              desc:
+                  'You have finished the quiz! \n You got $questionsCorrect/15 questions correct!')
+          .show();
+      quizBrain.reset();
+      scoreKeeper.clear();
+    } else {
+      quizBrain.nextQuestion();
+    }
   }
 
   @override
